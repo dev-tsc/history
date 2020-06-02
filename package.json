@@ -1,5 +1,5 @@
 {
-  "name": "history",
+  "name": "@dev-tsc/history",
   "version": "4.10.1",
   "description": "Manage session history with JavaScript",
   "repository": "ReactTraining/history",
