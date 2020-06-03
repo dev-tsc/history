@@ -2,14 +2,14 @@ var path = require('path');
 var webpack = require('webpack');
 var projectName = require('./package').name;
 
-module.exports = function(config) {
+module.exports = function (config) {
   var customLaunchers = {
     BS_Chrome: {
       base: 'BrowserStack',
       os: 'Windows',
       os_version: '10',
       browser: 'Chrome',
-      browser_version: '73.0'
+      browser_version: '73.0',
     },
     // BS_ChromeAndroid: {
     //   base: 'BrowserStack',
@@ -22,29 +22,29 @@ module.exports = function(config) {
       os: 'Windows',
       os_version: '10',
       browser: 'Firefox',
-      browser_version: '67.0'
+      browser_version: '67.0',
     },
     BS_Edge: {
       base: 'BrowserStack',
       os: 'Windows',
       os_version: '10',
       browser: 'Edge',
-      browser_version: '17.0'
+      browser_version: '17.0',
     },
     BS_IE11: {
       base: 'BrowserStack',
       os: 'Windows',
       os_version: '10',
       browser: 'IE',
-      browser_version: '11.0'
+      browser_version: '11.0',
     },
     BS_Safari: {
       base: 'BrowserStack',
       os: 'OS X',
       os_version: 'Mojave',
       browser: 'Safari',
-      browser_version: '12.1'
-    }
+      browser_version: '12.1',
+    },
     // BS_iPhoneX: {
     //   base: 'BrowserStack',
     //   device: 'iPhone X',
@@ -61,15 +61,8 @@ module.exports = function(config) {
 
   var historyAlias;
   switch (process.env.TEST_ENV) {
-    case 'cjs':
-      historyAlias = 'cjs/history.js';
-      break;
-    case 'umd':
-      historyAlias = 'umd/history.js';
-      break;
-    case 'source':
     default:
-      historyAlias = 'modules/index.js';
+      historyAlias = 'src/index.js';
   }
 
   config.set({
@@ -79,7 +72,7 @@ module.exports = function(config) {
     reporters: ['mocha'],
     files: ['tests.webpack.js'],
     preprocessors: {
-      'tests.webpack.js': ['webpack', 'sourcemap']
+      'tests.webpack.js': ['webpack', 'sourcemap'],
     },
     webpack: {
       devtool: 'inline-source-map',
@@ -88,24 +81,24 @@ module.exports = function(config) {
           {
             test: /\.js$/,
             exclude: /node_modules/,
-            loader: 'babel-loader'
-          }
-        ]
+            loader: 'babel-loader',
+          },
+        ],
       },
       resolve: {
         alias: {
-          history$: path.resolve(__dirname, historyAlias)
-        }
+          history$: path.resolve(__dirname, historyAlias),
+        },
       },
       plugins: [
         new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify('test')
-        })
-      ]
+          'process.env.NODE_ENV': JSON.stringify('test'),
+        }),
+      ],
     },
     webpackServer: {
-      noInfo: true
-    }
+      noInfo: true,
+    },
   });
 
   if (process.env.USE_CLOUD) {
@@ -120,11 +113,11 @@ module.exports = function(config) {
       config.browserStack = {
         project: projectName,
         build: process.env.TRAVIS_BUILD_NUMBER,
-        name: process.env.TRAVIS_JOB_NUMBER
+        name: process.env.TRAVIS_JOB_NUMBER,
       };
     } else {
       config.browserStack = {
-        project: projectName
+        project: projectName,
       };
     }
   }
